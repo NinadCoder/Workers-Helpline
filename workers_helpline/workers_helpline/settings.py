@@ -21,6 +21,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'board',
+    'workers_board',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
