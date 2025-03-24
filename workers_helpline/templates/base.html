@@ -13,22 +13,33 @@
         <a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
           <svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"></use></svg>
         </a>
-
+  
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
           <li><a href="/workers" class="nav-link px-2 text-white">Workers</a></li>
           <li><a href="/contact" class="nav-link px-2 text-white">Contact</a></li>
           <li><a href="/about" class="nav-link px-2 text-white">About</a></li>
         </ul>
+  
         <div class="text-end">
-          <button type="button" class="btn btn-outline-light me-2" onclick="window.location.href='/login'">Login</button>
-          <button type="button" class="btn btn-warning" onclick="window.location.href='/register'">Sign-up</button>
+          {% if user.is_authenticated %}
+            <div class="d-flex align-items-center">
+              <a>
+                <img src="{{ user.profile.image.url }}" alt="Profile" width="40" height="40" class="rounded-circle me-2">
+              </a>
+              <a href="{% url 'logout' %}" class="btn btn-outline-light">Logout</a>
+            </div>
+          {% else %}
+            <button type="button" class="btn btn-outline-light me-2" onclick="window.location.href='/login'">Login</button>
+            <button type="button" class="btn btn-warning" onclick="window.location.href='/register'">Sign-up</button>
+          {% endif %}
         </div>
       </div>
     </div>
   </header>
   <body>
     {% block body %}{% endblock body %}
+  </body>
     <footer class="text-gray-400 bg-gray-900 body-font">
       <div class="container px-5 py-24 mx-auto flex md:items-center lg:items-start md:flex-row md:flex-nowrap flex-wrap flex-col">
         <div class="flex-grow flex flex-wrap md:pl-20 -mb-10 md:mt-0 mt-10 md:text-left text-center">
