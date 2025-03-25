@@ -1,0 +1,49 @@
+{% extends "base.html" %}
+{% load crispy_forms_tags %}
+{% block body %}
+
+<section class="text-gray-400 bg-gray-900 body-font overflow-hidden">
+  <div class="container px-5 py-24 mx-auto -my-14">
+    <div class="lg:w-4/5 mx-auto flex flex-wrap">
+      <!-- Left Side: Worker Info and Edit Form -->
+      <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
+        <h3 class="text-sm title-font text-gray-500 tracking-widest">WORKER PROFILE</h3>
+        <h1 class="account-heading">{{ user.username }}</h1>
+        <!-- Form to edit worker details -->
+        <div class="mb-4">
+          <h2 class="text-xl font-bold text-white">Edit Your Details</h2>
+          <form method="post">
+            {% csrf_token %}
+            {{ form.worker_type }}
+            {{ form.address }}
+            {{ form.job_profession }}
+            {{ form.wage }}
+            {{ form.police_verified }}
+            <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Save Changes</button>
+          </form>
+        </div>
+        <!-- Display some details (if desired) -->
+        <div class="flex border-t border-gray-800 py-2">
+          <span class="text-gray-500">Address</span>
+          <span class="ml-auto text-white">{{ worker_detail.address }}</span>
+        </div>
+        <div class="flex border-t border-gray-800 py-2">
+          <span class="text-gray-500">Job/Profession</span>
+          <span class="ml-auto text-white">{{ worker_detail.job_profession }}</span>
+        </div>
+        <div class="flex border-t border-gray-800 py-2">
+          <span class="text-gray-500">Wage</span>
+          <span class="ml-auto text-white">${{ worker_detail.wage }}</span>
+        </div>
+        <div class="flex border-t border-gray-800 py-2">
+          <span class="text-gray-500">Police Verified</span>
+          <span class="ml-auto text-white">{% if worker_detail.police_verified %}Yes{% else %}No{% endif %}</span>
+        </div>
+      </div>
+      <!-- Right Side: Profile Picture -->
+      <img alt="Profile Image" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="{{ user.profile.image.url|default:'/media/default.jpg' }}">
+    </div>
+  </div>
+</section>
+
+{% endblock body %}
