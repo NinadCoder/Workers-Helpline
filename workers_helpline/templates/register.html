@@ -24,6 +24,7 @@
           <h2 class="text-gray-900 text-lg font-medium title-font mb-5">Sign Up</h2>
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
+            <!-- Standard fields -->
             <div class="relative mb-4">
               {{ form.username|as_crispy_field }}
             </div>
@@ -34,19 +35,47 @@
               <label class="block text-sm font-medium text-gray-700 mb-2">Register as:</label>
               {{ form.role|as_crispy_field }}
             </div>
+            <!-- Extra details for workers -->
+            <div class="relative mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Worker Type</label>
+              {{ form.worker_type|as_crispy_field }}
+            </div>
+            <div class="relative mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Job Profession</label>
+              {{ form.job_profession|as_crispy_field }}
+            </div>
+            <div class="relative mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Age</label>
+              {{ form.age|as_crispy_field }}
+            </div>
+            <div class="relative mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
+              {{ form.address|as_crispy_field }}
+            </div>
+            <div class="relative mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Wage</label>
+              {{ form.wage|as_crispy_field }}
+            </div>
+            <div class="relative mb-4">
+              <label class="block text-sm font-medium text-gray-700 mb-2">Police Verified</label>
+              {{ form.police_verified|as_crispy_field }}
+            </div>
+            <!-- Password Fields -->
             <div class="relative mb-4">
               {{ form.password1|as_crispy_field }}
             </div>
             <div class="relative mb-4">
               {{ form.password2|as_crispy_field }}
             </div>
+            <!-- Profile Photo Upload -->
             <div class="relative mb-4">
               <label class="block text-sm font-medium text-gray-700 mb-2">Profile Photo</label>
               <input id="profile_image" name="profile_image" type="file" class="hidden" onchange="updateFileName()">
               <button type="button" onclick="document.getElementById('profile_image').click()" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" id="uploadButton">
                 Upload Profile Photo
               </button>
-            </div>
+            </div>            
+            <!-- Submit Button -->
             <button class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" type="submit">
               Sign Up
             </button>

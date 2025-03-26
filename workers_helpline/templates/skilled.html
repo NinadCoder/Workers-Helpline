@@ -10,23 +10,20 @@
     <div class="flex flex-wrap -m-4">
       {% for worker in workers %}
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-        <a class="block relative h-48 rounded overflow-hidden">
-          {% if worker.user.profile.image %}
-            <img alt="Profile Image" class="object-cover object-center w-full h-full block" src="{{ worker.user.profile.image.url }}">
+        <!-- Wrap the image in a link that goes to hire view -->
+        <a href="{% url 'hire' worker.user.id %}" class="block relative h-48 rounded overflow-hidden">
+          {% if worker.image %}
+            <img alt="Profile Image" class="object-cover object-center w-full h-full block" src="{{ worker.image.url }}">
           {% else %}
             <img alt="Profile Image" class="object-cover object-center w-full h-full block" src="https://dummyimage.com/420x260">
           {% endif %}
         </a>
         <div class="mt-4">
-          <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">
-            {{ worker.worker_type|title }}
-          </h3>
-          <!-- Link to a detailed view -->
-          <button type="button" onclick="window.location.href='{% url 'worker_detail' worker.user.id %}'">
-            <h2 class="text-white title-font text-lg font-medium">
-              {{ worker.user.username }}
-            </h2>
-          </button>
+          <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{ worker.worker_type|title }}</h3>
+          <!-- Also wrap the username in a link -->
+          <a href="{% url 'hire' worker.user.id %}">
+            <h2 class="text-white title-font text-lg font-medium">{{ worker.user.username }}</h2>
+          </a>
           <p class="mt-1">${{ worker.wage }}</p>
           <p class="mt-1">{{ worker.job_profession }}</p>
         </div>

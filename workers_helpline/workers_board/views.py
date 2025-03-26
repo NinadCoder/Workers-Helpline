@@ -1,53 +1,25 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth.decorators import login_required
-from .forms import WorkerDetailForm
-from .models import WorkerDetail
+from django.shortcuts import render, get_object_or_404
+from users.models import Profile
 
 def workers(request):
-    return render(request, 'workers.html')
+    all_workers = Profile.objects.filter(role='worker')
+    return render(request, 'workers.html', {'workers': all_workers})
 
 def unskilled(request):
-    # Filter for unskilled (general) workers
-    unskilled_workers = WorkerDetail.objects.filter(worker_type='general')
-    context = {'workers': unskilled_workers}
-    return render(request, 'unskilled.html', context)
+    unskilled_workers = Profile.objects.filter(role='worker', worker_type='general')
+    return render(request, 'unskilled.html', {'workers': unskilled_workers})
 
 def skilled(request):
-    # Filter for skilled (qualified) workers
-    skilled_workers = WorkerDetail.objects.filter(worker_type='qualified')
-    context = {'workers': skilled_workers}
-    return render(request, 'skilled.html', context)
+    skilled_workers = Profile.objects.filter(role='worker', worker_type='qualified')
+    return render(request, 'skilled.html', {'workers': skilled_workers})
 
-def hire(request):
-    return render(request, 'hire.html')
+from django.shortcuts import render, get_object_or_404
+from users.models import Profile
 
-def worker_detail_view(request, user_id):
-    # Displays a single worker’s details
-    worker_detail = get_object_or_404(WorkerDetail, user__id=user_id)
+def hire(request, user_id):
+    # Get the worker's Profile based on the given user_id.
+    worker_detail = get_object_or_404(Profile, user__id=user_id, role='worker')
     context = {
-        'worker_detail': worker_detail
-    }
-    return render(request, 'hire.html', context)
-
-@login_required
-def worker_profile(request):
-    # Ensure that only users with role = "worker" can access
-    if request.user.profile.role != 'worker':
-        return redirect('profile')  # or show an error
-
-    # Get or create a WorkerDetail instance for this user
-    worker_detail, created = WorkerDetail.objects.get_or_create(user=request.user)
-    
-    if request.method == 'POST':
-        form = WorkerDetailForm(request.POST, instance=worker_detail)
-        if form.is_valid():
-            form.save()
-            return redirect('worker_profile')
-    else:
-        form = WorkerDetailForm(instance=worker_detail)
-    
-    context = {
-        'form': form,
         'worker_detail': worker_detail,
     }
-    return render(request, 'worker_profile.html', context)
+    return render(request, 'hire.html', context)
