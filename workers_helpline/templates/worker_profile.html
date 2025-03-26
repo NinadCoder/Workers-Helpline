@@ -5,43 +5,32 @@
 <section class="text-gray-400 bg-gray-900 body-font overflow-hidden">
   <div class="container px-5 py-24 mx-auto -my-14">
     <div class="lg:w-4/5 mx-auto flex flex-wrap">
-      <!-- Left Side: Worker Info and Edit Form -->
       <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-        <h3 class="text-sm title-font text-gray-500 tracking-widest">WORKER PROFILE</h3>
-        <h1 class="account-heading">{{ user.username }}</h1>
-        <!-- Form to edit worker details -->
-        <div class="mb-4">
-          <h2 class="text-xl font-bold text-white">Edit Your Details</h2>
-          <form method="post">
-            {% csrf_token %}
-            {{ form.worker_type }}
-            {{ form.address }}
-            {{ form.job_profession }}
-            {{ form.wage }}
-            {{ form.police_verified }}
-            <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg">Save Changes</button>
-          </form>
+        <h3 class="text-sm title-font text-gray-500 tracking-widest">
+          {% if worker_detail.worker_type == 'qualified' %}
+            Skilled Worker
+          {% else %}
+            Unskilled Worker
+          {% endif %}
+        </h3>
+        <h1 class="account-heading text-2xl text-white font-bold">
+          {{ request.user.username }}
+        </h1>
+        <div class="flex mb-4">
+          <li class="flex-grow border-b-2 border-indigo-500 py-2 text-lg px-1">Edit Your Details</li>
         </div>
-        <!-- Display some details (if desired) -->
-        <div class="flex border-t border-gray-800 py-2">
-          <span class="text-gray-500">Address</span>
-          <span class="ml-auto text-white">{{ worker_detail.address }}</span>
-        </div>
-        <div class="flex border-t border-gray-800 py-2">
-          <span class="text-gray-500">Job/Profession</span>
-          <span class="ml-auto text-white">{{ worker_detail.job_profession }}</span>
-        </div>
-        <div class="flex border-t border-gray-800 py-2">
-          <span class="text-gray-500">Wage</span>
-          <span class="ml-auto text-white">${{ worker_detail.wage }}</span>
-        </div>
-        <div class="flex border-t border-gray-800 py-2">
-          <span class="text-gray-500">Police Verified</span>
-          <span class="ml-auto text-white">{% if worker_detail.police_verified %}Yes{% else %}No{% endif %}</span>
-        </div>
+        <!-- Form to update worker details -->
+        <form method="POST">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <button type="submit" class="text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
+            Save
+          </button>
+        </form>
       </div>
-      <!-- Right Side: Profile Picture -->
-      <img alt="Profile Image" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="{{ user.profile.image.url|default:'/media/default.jpg' }}">
+      <img alt="Profile Image" 
+           class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded"
+           src="{{ request.user.profile.image.url|default:'/media/default.jpg' }}">
     </div>
   </div>
 </section>

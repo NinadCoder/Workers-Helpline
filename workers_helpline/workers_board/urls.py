@@ -1,10 +1,20 @@
-from django.urls import path, include
-from workers_board import views
-from .views import worker_profile
+from django.urls import path
+from .views import (
+    workers,
+    unskilled,
+    skilled,
+    hire,
+    worker_detail_view,
+    worker_profile
+)
+
 urlpatterns = [
-    path('', views.workers, name='workers'),
-    path('unskilled', views.unskilled, name='unskilled'),
-    path('skilled', views.skilled, name='skilled'),
-    path('hire', views.hire, name='hire'),
-    path('worker/profile/', worker_profile, name='worker_profile')
+    path('', workers, name='workers'),
+    path('unskilled', unskilled, name='unskilled'),
+    path('skilled', skilled, name='skilled'),
+    path('hire', hire, name='hire'),
+    # Displays a single worker's details based on their user ID
+    path('hire/<int:user_id>/', worker_detail_view, name='worker_detail'),
+    # Worker’s personal profile (to edit their own info)
+    path('worker/profile/', worker_profile, name='worker_profile'),
 ]
