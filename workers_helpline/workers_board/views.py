@@ -4,6 +4,7 @@ from django.core.mail import send_mail
 from django.conf import settings
 from users.models import Profile
 from .models import HireOffer
+from django.contrib import messages
 
 @login_required
 def workers(request):
@@ -91,3 +92,27 @@ def hirer_offers(request):
         return redirect('index')
     offers = HireOffer.objects.filter(hirer=request.user).order_by('-date_offered')
     return render(request, 'hirer_offers.html', {'offers': offers})
+
+
+from django.shortcuts import get_object_or_404
+
+@login_required
+def delete_offer(request, offer_id):
+    # Retrieve the offer
+    offer = get_object_or_404(HireOffer, id=offer_id)
+    
+    # Check ownership: workers can delete offers they received,
+    # hirers can delete offers they sent.
+    if request.user.profile.role == 'worker' and offer.worker == request.user:
+        offer.delete()
+    elif request.user.profile.role == 'hirer' and offer.hirer == request.user:
+        offer.delete()
+    else:
+        messages.error(request, 'You do not have permission to delete this offer.')
+        return redirect('index')
+    
+    # Redirect back to the appropriate offers page
+    if request.user.profile.role == 'worker':
+        return redirect('worker_offers')
+    else:
+        return redirect('hirer_offers')
