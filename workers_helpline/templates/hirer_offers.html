@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  My Sent Offers
+{% endblock title %}
+
+{% block body %}
+<div class="container">
+  <h2 class="my-3">Offers You Sent</h2>
+  {% if offers %}
+    <ul class="list-group">
+      {% for offer in offers %}
+        <li class="list-group-item mb-2">
+          <strong>Worker:</strong> {{ offer.worker.username }} <br>
+          <strong>Offer Details:</strong> {{ offer.offer_details }} <br>
+          <strong>Date Offered:</strong> {{ offer.date_offered|date:"Y-m-d H:i" }} <br>
+          <strong>Status:</strong>
+          {% if offer.status == 'accepted' %}
+            <span class="text-success">Accepted</span>
+          {% elif offer.status == 'rejected' %}
+            <span class="text-danger">Rejected</span>
+          {% else %}
+            <span class="text-warning">Pending</span>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>You haven't sent any offers yet.</p>
+  {% endif %}
+</div>
+{% endblock body %}

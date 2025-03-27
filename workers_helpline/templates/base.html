@@ -16,10 +16,18 @@
 
         <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
           <li><a href="/index" class="nav-link px-2 text-white">Home</a></li>
-          <li><a href="/workers" class="nav-link px-2 text-white">Workers</a></li>
+        {% if request.user.is_authenticated %}
+          {% if request.user.profile.role == 'hirer' %}
+            <li><a href="{% url 'workers' %}" class="nav-link px-2 text-white">Workers</a></li>
+            <li><a href="{% url 'hirer_offers' %}" class="nav-link px-2 text-white">My Offers</a></li>
+          {% elif request.user.profile.role == 'worker' %}
+            <li><a href="{% url 'worker_offers' %}" class="nav-link px-2 text-white">Offers</a></li>
+          {% endif %}
+        {% endif %}
           <li><a href="/contact" class="nav-link px-2 text-white">Contact</a></li>
           <li><a href="/about" class="nav-link px-2 text-white">About</a></li>
-        </ul>
+          
+        </ul>        
         <div class="text-end">
           <form action="{% url 'logout' %}" method="post">
             {% csrf_token %}

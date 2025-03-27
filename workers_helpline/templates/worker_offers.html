@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block title %}
+  My Offers
+{% endblock title %}
+
+{% block body %}
+<div class="container">
+  <h2 class="my-3">My Offers</h2>
+  {% if offers %}
+    <ul class="list-group">
+      {% for offer in offers %}
+        <li class="list-group-item mb-2">
+          <strong>Hirer:</strong> {{ offer.hirer.username }} <br>
+          <strong>Offer Details:</strong> {{ offer.offer_details }} <br>
+          <strong>Date Offered:</strong> {{ offer.date_offered|date:"Y-m-d H:i" }} <br>
+          <strong>Status:</strong>
+          {% if offer.status == 'accepted' %}
+            <span class="text-success">Accepted</span>
+          {% elif offer.status == 'rejected' %}
+            <span class="text-danger">Rejected</span>
+          {% else %}
+            <span class="text-warning">Pending</span>
+          {% endif %}
+          {% if offer.status == 'pending' %}
+            <form action="{% url 'offer_action' offer.id %}" method="POST" class="mt-2">
+              {% csrf_token %}
+              <button type="submit" name="action" value="accept" class="btn btn-success btn-sm">Accept</button>
+              <button type="submit" name="action" value="reject" class="btn btn-danger btn-sm">Reject</button>
+            </form>
+          {% endif %}
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p>No offers yet.</p>
+  {% endif %}
+</div>
+{% endblock body %}
