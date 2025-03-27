@@ -27,14 +27,21 @@ def hire(request, user_id):
         return redirect('index')
     
     worker_detail = get_object_or_404(Profile, user__id=user_id, role='worker')
+    
     if request.method == 'POST':
+        offer_details = request.POST.get('offer_details', '').strip()
+        # Fallback default if no custom details provided.
+        if not offer_details:
+            offer_details = "I would like to hire you for a job."
         HireOffer.objects.create(
             hirer=request.user,
             worker=worker_detail.user,
-            offer_details="I would like to hire you for a job."  # Optionally customize this
+            offer_details=offer_details
         )
         return redirect('workers')
+    
     return render(request, 'hire.html', {'worker_detail': worker_detail})
+
 
 @login_required
 def worker_offers(request):

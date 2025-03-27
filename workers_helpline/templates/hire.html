@@ -43,7 +43,11 @@
         <!-- Optional: A Hire button -->
          <form method="POST">
           {% csrf_token %}
-        <div class="flex">
+        <div class="form-group">
+          <label for="offer_details">Offer Details</label>
+          <textarea class="form-control" id="offer_details" name="offer_details" rows="4" placeholder="Enter your offer details here..."></textarea>
+        </div>
+          <div class="flex">
           <button type="submit" class="flex ml-auto text-white bg-indigo-500 border-0 py-2 px-6 focus:outline-none hover:bg-indigo-600 rounded">
             Hire
           </button>
