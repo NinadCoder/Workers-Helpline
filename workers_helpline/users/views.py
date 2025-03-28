@@ -35,4 +35,4 @@ def profile(request):
     if request.user.profile.role == 'worker':
         return render(request, 'worker_profile.html')
     else:
-        return render(request, 'profile.html')
+        return redirect('index')

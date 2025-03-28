@@ -1,42 +1,35 @@
 {% extends "base.html" %}
 {% load crispy_forms_tags %}
 {% block body %}
-<section class="text-gray-400 bg-gray-900 body-font overflow-hidden">
+<section class="text-gray-400 body-font overflow-hidden">
   <div class="container px-5 py-24 mx-auto -my-14">
     <div class="lg:w-4/5 mx-auto flex flex-wrap">
       <!-- Left Side: Worker Details -->
       <div class="lg:w-1/2 w-full lg:pr-10 lg:py-6 mb-6 lg:mb-0">
-        <h3 class="text-sm title-font text-gray-500 tracking-widest">
-          {% if worker_detail.worker_type == 'qualified' %}
-            Skilled Worker
-          {% else %}
-            Unskilled Worker
-          {% endif %}
-        </h3>
-        <h1 class="account-heading text-2xl text-white font-bold">
+        <h3 class="text-sm title-font text-gray-500 tracking-widest" align="center">
           {{ worker_detail.user.username }}
-        </h1>
-        <div class="flex mb-4">
-          <li class="flex-grow border-b-2 border-indigo-500 py-2 text-lg px-1">Description</li>
-          <li class="flex-grow border-b-2 border-indigo-500 py-2 text-lg px-1">Review</li>
-          <li class="flex-grow border-b-2 border-indigo-500 py-2 text-lg px-1">Contact</li>
-        </div>
-        <p class="leading-relaxed mb-4">
+        </h3>
+        <h1 class="account-heading text-2xl text-dark font-bold" align="center">
           {{ worker_detail.job_profession }}
-        </p>
-        <div class="flex border-t border-gray-800 py-2">
+        </h1>
+        <div class="flex ">
+          <li class="flex-grow border-b-2 border-indigo-500 py-2 text-white px-1">Description</li>
+          <li class="flex-grow border-b-2 border-indigo-500 py-2 text-white px-1">Review</li>
+          <li class="flex-grow border-b-2 border-indigo-500 py-2 text-white px-1">Contact</li>
+        </div>
+        <div class="flex py-2">
           <span class="text-gray-500 text-sm">Address</span>
-          <span class="ml-auto text-white text-base">{{ worker_detail.address|default:"Not Provided" }}</span>
+          <span class="ml-auto text-dark text-base">{{ worker_detail.address|default:"Not Provided" }}</span>
         </div>
         <div class="flex border-t border-gray-800 py-2">
           <span class="text-gray-500 text-sm">Police Verified</span>
-          <span class="ml-auto text-white text-base">
+          <span class="ml-auto text-dark text-base">
             {% if worker_detail.police_verified %}Yes{% else %}No{% endif %}
           </span>
         </div>
         <div class="flex border-t border-b mb-6 border-gray-800 py-2">
           <span class="text-gray-500 text-sm">Wage</span>
-          <span class="ml-auto text-white text-base">
+          <span class="ml-auto text-dark text-base">
             ${{ worker_detail.wage|default:"0.00" }}
           </span>
         </div>
@@ -44,7 +37,7 @@
          <form method="POST">
           {% csrf_token %}
         <div class="form-group">
-          <label for="offer_details">Offer Details</label>
+          <label for="offer_details" class="text-text-gray-500">Offer Details</label>
           <textarea class="form-control" id="offer_details" name="offer_details" rows="4" placeholder="Enter your offer details here..."></textarea>
         </div>
           <div class="flex">
@@ -54,9 +47,9 @@
         </form>
         </div>
       </div>
-      <!-- Right Side: Worker Profile Image -->
+      <!-- Right Column: Profile Image -->
       <div class="lg:w-1/2 w-full">
-        <img alt="Worker Photo" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="{{ worker_detail.user.profile.image.url|default:'/media/default.jpg' }}">
+        <img align="right" alt="Profile Image" class="lg:w-1/2 w-full lg:h-auto h-64 object-cover object-center rounded" src="{{ worker_detail.user.profile.image.url|default:'/media/default.jpg' }}">
       </div>
     </div>
   </div>

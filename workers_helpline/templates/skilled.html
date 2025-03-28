@@ -1,16 +1,22 @@
 {% extends "base.html" %}
 {% block title %}Skilled Workers{% endblock title %}
 {% block body %}
-<section class="text-gray-400 bg-gray-900 body-font">
+<section class="text-gray-400 body-font">
   <div class="container px-5 py-24 mx-auto">
-    <div class="flex flex-col text-center w-full mb-12">
-      <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-white">Skilled Workers</h1>
-      <p class="lg:w-2/3 mx-auto leading-relaxed text-base">Hire them by looking at their details.</p>
+    <div class="flex flex-wrap -m-4">
+      <div class="flex flex-col text-center w-full mb-12">
+        <!-- Centered image in this space -->
+        <img 
+          src="/static/uw1.png" 
+          alt="Description" 
+          class="mx-auto w-full md:w-1/2 h-auto rounded"
+        >
+      </div>
     </div>
+    
     <div class="flex flex-wrap -m-4">
       {% for worker in workers %}
       <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
-        <!-- Wrap the image in a link that goes to hire view -->
         <a href="{% url 'hire' worker.user.id %}" class="block relative h-48 rounded overflow-hidden">
           {% if worker.image %}
             <img alt="Profile Image" class="object-cover object-center w-full h-full block" src="{{ worker.image.url }}">
@@ -19,13 +25,9 @@
           {% endif %}
         </a>
         <div class="mt-4">
-          <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">{{ worker.worker_type|title }}</h3>
-          <!-- Also wrap the username in a link -->
-          <a href="{% url 'hire' worker.user.id %}">
-            <h2 class="text-white title-font text-lg font-medium">{{ worker.user.username }}</h2>
-          </a>
-          <p class="mt-1">${{ worker.wage }}</p>
-          <p class="mt-1">{{ worker.job_profession }}</p>
+          <h3 class="text-secondary text-xs mb-1 text-center">{{ worker.user.username }}</h3>
+          <p class="text-dark mt-1 mb-1 text-center">${{ worker.wage }}</p>
+          <p class="text-dark mt-1 text-center">{{ worker.job_profession }}</p>
         </div>
       </div>
       {% empty %}

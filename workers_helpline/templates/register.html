@@ -2,74 +2,44 @@
 {% load static %}
 {% load crispy_forms_tags %}
 <html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
-    <title>Register</title>
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
-  </head>
-  <body>
-    {% block body %}
-    <section class="text-gray-600 body-font -my-22">
-      <div class="container px-5 py-24 mx-auto flex flex-wrap items-center">
-        <div class="lg:w-3/5 md:w-1/2 md:pr-16 lg:pr-0 pr-0">
-          <h1 class="title-font font-medium text-3xl text-gray-900 fade-in">
-            Join us and out-earn the corrupt system.
-          </h1>
-          <p class="leading-relaxed mt-4 fade-in">Create your account to become a part of our community.</p>
-        </div>
-        <div class="lg:w-2/6 md:w-1/2 bg-gray-100 rounded-lg p-8 flex flex-col md:ml-auto w-full mt-10 md:mt-0">
-          <h2 class="text-gray-900 text-lg font-medium title-font mb-5">Sign Up</h2>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+  <title>Register</title>
+  <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous">
+</head>
+<body>
+  {% block body %}
+  <section class="text-gray-600 body-font">
+    <div class="container px-5 py-24 mx-auto">
+      <div class="flex flex-wrap -m-4 -my-30">
+        <!-- Form Section -->
+        <div class="lg:w-1/2 md:w-2/3 bg-gray-100 rounded-lg p-8 flex flex-col w-full">
+          <h2 class="text-gray-900 text-2xl font-medium title-font mb-5">Sign Up</h2>
           <form method="POST" enctype="multipart/form-data">
             {% csrf_token %}
-            <!-- Standard fields -->
-            <div class="relative mb-4">
-              {{ form.username|as_crispy_field }}
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="relative mb-4">{{ form.username|as_crispy_field }}</div>
+              <div class="relative mb-4">{{ form.email|as_crispy_field }}</div>
+              <div class="relative mb-4">{{ form.role|as_crispy_field }}</div>
+              <div class="relative mb-4">{{ form.address|as_crispy_field }}</div>
             </div>
-            <div class="relative mb-4">
-              {{ form.email|as_crispy_field }}
+
+            <div id="workerFields" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="relative mb-4">{{ form.worker_type|as_crispy_field }}</div>
+              <div class="relative mb-4">{{ form.job_profession|as_crispy_field }}</div>
+              <div class="relative mb-4">{{ form.age|as_crispy_field }}</div>
+              <div class="relative mb-4">{{ form.wage|as_crispy_field }}</div>
+              <div class="relative mb-4">{{ form.police_verified|as_crispy_field }}</div>
             </div>
-            <div class="relative mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Register as:</label>
-              {{ form.role|as_crispy_field }}
+
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+              <div class="relative mb-4">{{ form.password1|as_crispy_field }}</div>
+              <div class="relative mb-4">{{ form.password2|as_crispy_field }}</div>
             </div>
-            <!-- Address field needed for both hirers and workers -->
-            <div class="relative mb-4">
-              <label class="block text-sm font-medium text-gray-700 mb-2">Address</label>
-              {{ form.address|as_crispy_field }}
-            </div>
-            <!-- Extra details for workers only -->
-            <div id="workerFields">
-              <div class="relative mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Worker Type</label>
-                {{ form.worker_type|as_crispy_field }}
-              </div>
-              <div class="relative mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Job Profession</label>
-                {{ form.job_profession|as_crispy_field }}
-              </div>
-              <div class="relative mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Age</label>
-                {{ form.age|as_crispy_field }}
-              </div>
-              <div class="relative mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Wage</label>
-                {{ form.wage|as_crispy_field }}
-              </div>
-              <div class="relative mb-4">
-                <label class="block text-sm font-medium text-gray-700 mb-2">Police Verified</label>
-                {{ form.police_verified|as_crispy_field }}
-              </div>
-            </div>
-            <!-- Password Fields -->
-            <div class="relative mb-4">
-              {{ form.password1|as_crispy_field }}
-            </div>
-            <div class="relative mb-4">
-              {{ form.password2|as_crispy_field }}
-            </div>
+
             <!-- Profile Photo Upload -->
             <div class="relative mb-4">
               <label class="block text-sm font-medium text-gray-700 mb-2">Profile Photo</label>
@@ -77,57 +47,43 @@
               <button type="button" onclick="document.getElementById('profile_image').click()" class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" id="uploadButton">
                 Upload Profile Photo
               </button>
-            </div>            
+            </div>
+
             <!-- Submit Button -->
-            <button class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg" type="submit">
-              Sign Up
-            </button>
+            <button class="text-white bg-indigo-500 border-0 py-2 px-8 focus:outline-none hover:bg-indigo-600 rounded text-lg w-full" type="submit">Sign Up</button>
           </form>
+
           <p class="text-xs text-gray-500 mt-3">Already have an account? <a href="{% url 'login' %}" class="text-indigo-500">Sign In</a></p>
         </div>
+
+        <!-- Info Section -->
+        <div class="lg:w-1/2 md:w-1/3 flex flex-col items-center justify-center p-8">
+          <img class="w-full max-w-md">
+          <h3 class="text-gray-900 text-xl font-semibold mt-4">Join us and start your journey!</h3>
+          <p class="text-gray-500 mt-2">Explore opportunities, hire workers, or get hired.</p>
+        </div>
       </div>
-    </section>
-    {% endblock body %}
+    </div>
+  </section>
+  {% endblock body %}
 
-    <script>
-      // Function to update the file upload button text
-      function updateFileName() {
-        const fileInput = document.getElementById('profile_image');
-        const uploadButton = document.getElementById('uploadButton');
-        if (fileInput.files.length > 0) {
-          uploadButton.textContent = 'Image Uploaded';
-        } else {
-          uploadButton.textContent = 'Upload Profile Photo';
-        }
-      }
+  <script>
+    function updateFileName() {
+      const fileInput = document.getElementById('profile_image');
+      const uploadButton = document.getElementById('uploadButton');
+      uploadButton.textContent = fileInput.files.length > 0 ? 'Image Uploaded' : 'Upload Profile Photo';
+    }
 
-      // Show/hide worker-specific fields based on selected role
-      function toggleWorkerFields() {
-        const roleInputs = document.getElementsByName('role');
-        let selectedRole = null;
-        for (const input of roleInputs) {
-          if (input.checked) {
-            selectedRole = input.value;
-            break;
-          }
-        }
-        const workerFields = document.getElementById('workerFields');
-        // If role is 'worker', show extra fields; if 'hirer', hide them.
-        if (selectedRole === 'worker') {
-          workerFields.style.display = 'block';
-        } else {
-          workerFields.style.display = 'none';
-        }
-      }
+    function toggleWorkerFields() {
+      const selectedRole = document.querySelector('input[name="role"]:checked')?.value;
+      const workerFields = document.getElementById('workerFields');
+      workerFields.style.display = selectedRole === 'worker' ? 'grid' : 'none';
+    }
 
-      // Attach event listeners to role radio buttons
-      window.addEventListener('load', function() {
-        toggleWorkerFields(); // Check on page load
-        const roleInputs = document.getElementsByName('role');
-        for (const input of roleInputs) {
-          input.addEventListener('change', toggleWorkerFields);
-        }
-      });
-    </script>
-  </body>
+    window.addEventListener('load', function() {
+      toggleWorkerFields();
+      document.querySelectorAll('input[name="role"]').forEach(input => input.addEventListener('change', toggleWorkerFields));
+    });
+  </script>
+</body>
 </html>
