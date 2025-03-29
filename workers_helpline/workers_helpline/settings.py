@@ -70,11 +70,19 @@ WSGI_APPLICATION = 'workers_helpline.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
+
+import dj_database_url
+DATABASES = {
+    'default': dj_database_url.config(default='postgresql://workers_helpline_user:zPKFE7yXcsbgh97Phf5A7NtXDbRiTH1r@dpg-cvjp3reuk2gs73a0v9sg-a/workers_helpline')
+}
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
         'NAME': BASE_DIR / 'db.sqlite3',
-    }
+    },
+    'default': 
+        dj_database_url.config(default='postgresql://workers_helpline_user:zPKFE7yXcsbgh97Phf5A7NtXDbRiTH1r@dpg-cvjp3reuk2gs73a0v9sg-a/workers_helpline')
     
 }
 
